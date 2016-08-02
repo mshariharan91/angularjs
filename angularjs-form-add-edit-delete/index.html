@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>Angularjs - From add and delete</title>
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <script type="text/javascript" src="js/angular.js"></script>      
+        <script type="text/javascript">
+            var myapp = angular.module('Myapp',[]); 
+            myapp.controller('Customer',function($scope){
+                
+            $scope.customers = []; // ng object
+                
+            $scope.addcustomercls = []; // ng class
+            $scope.editcustomercls = ['ng-hide']; // ng class
+            
+            
+            // add customer data into object 'customers'
+            $scope.addcustomer = function(customer)
+            {
+                $scope.customers.push(customer);
+                $scope.customer = '';
+                
+            }
+            
+            // remove customer data from object 'customers'
+            $scope.removecustomer = function(customer){
+                var index = $scope.customers.indexOf(customer);
+                alert('Delete Customer : '+ customer.name);
+                $scope.customers.splice(index,1)
+            }
+            
+            // update  customer data 
+            $scope.editcustomer = function(customer){
+                
+                $scope.current = customer;               
+                $scope.addcustomercls.push('ng-hide');
+                $scope.editcustomercls.pop('ng-hide');
+                
+            }
+            $scope.updatecustomer = function(){
+                $scope.current = {};
+                $scope.addcustomercls.pop('ng-hide');
+                $scope.editcustomercls.push('ng-hide');
+            }
+            });
+            
+             
+        </script>
+    </head>
+    <body ng-app="Myapp">
+        <h2>Angularjs from add, edit and delete</h2>
+        <div ng-controller="Customer">
+         
+        <!-- Add customer -->    
+        <form class="form"  ng-submit="addcustomer(customer)" ng-class="addcustomercls">
+            <!-- ng-submit to post data to addcustomer function -->
+            <h3>Add Customer</h3>
+            <p>Name : <input type="text" ng-model="customer.name" required /></p>
+            <p>Email : <input type="email" ng-model="customer.email" required /></p>
+            <p>Phone : <input type="tel"   ng-model="customer.phone" required  /></p>
+            <p><input type="submit" class="btn btn-success" value="Add Customer" /></p>
+        </form>
+            
+        <!-- Edit customer -->    
+        <form class="form"  ng-submit="updatecustomer()" ng-class="editcustomercls">
+            <!-- ng-submit to post data to updatecustomer function -->
+            <h3>edit Customer</h3>
+            <p>Name : <input type="text" value="{{current.name}}" ng-model="current.name" required /></p>
+            <p>Email : <input type="email" value="{{current.email}}" ng-model="current.email" required /></p>
+            <p>Phone : <input type="tel" value="{{current.phone}} "ng-model="current.phone" required /></p>
+            <p><input type="submit" class="btn btn-success" value="Update Customer" /></p>
+        </form>
+            
+        <br/><br/>
+        <h2>Customers</h2>
+        <!-- Customer List -->
+        <h4>Total : {{customers.length}}</h4>
+        <table class="table table-bordered">
+            <tr>
+            <th>Name</th><th>Email</th><th>phone</th><th>Action</th>
+            </tr>
+            
+            <!-- ng-repeat to list customer from customers object -->
+            <tr ng-repeat="customer in customers"> 
+                <td ng-bind="customer.name"></td>
+                <td ng-bind="customer.email"></td>
+                <td ng-bind="customer.phone"></td>
+                <td>                
+                    <a href="javascript:void(0)" ng-click="removecustomer(customer)" class="btn btn-danger">Delete</a>  /              
+                    <a href="javascript:void(0)" ng-click="editcustomer(customer)" class="btn btn-info">Edit</a></td>
+            </tr>
+        </table>
+    </div>
+    </body>
+</html>
