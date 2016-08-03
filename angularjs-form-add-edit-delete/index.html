@@ -2,23 +2,53 @@
     <head>
         <title>Angularjs - From add and delete</title>
         <link rel="stylesheet" href="css/bootstrap.css" />
+        <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/angular.js"></script>      
         <script type="text/javascript">
             var myapp = angular.module('Myapp',[]); 
             myapp.controller('Customer',function($scope){
                 
             $scope.customers = []; // ng object
-                
+             $scope.customer = {
+                 id : '',
+                 name : '',
+                 email : '',
+                 phone : ''
+             } ;    
             $scope.addcustomercls = []; // ng class
             $scope.editcustomercls = ['ng-hide']; // ng class
             
             
             // add customer data into object 'customers'
-            $scope.addcustomer = function(customer)
+            $scope.savecustomer = function(customer)
             {
+                if(customer.id == '') {
+                customer.id = $scope.customers.length + 1;
                 $scope.customers.push(customer);
-                $scope.customer = '';
-                
+                $scope.customer = {
+                     id : '',
+                     name : '',
+                     email : '',
+                     phone : ''
+                 };  
+                }
+                else{
+                   $.grep($scope.customers, function (e){ 
+                    if (e.id == customer.id){
+                        e.name = customer.name;
+                        e.email = customer.email;  
+                        e.phone = customer.phone;  
+                    }  
+                });  
+                $scope.customer = {
+                     id : '',
+                     name : '',
+                     email : '',
+                     phone : ''
+                 };  
+                $scope.addcustomercls.pop('ng-hide');
+                $scope.editcustomercls.push('ng-hide'); 
+                }
             }
             
             // remove customer data from object 'customers'
@@ -30,17 +60,16 @@
             
             // update  customer data 
             $scope.editcustomer = function(customer){
+                $scope.customer.id = customer.id;
+                $scope.customer.name = customer.name;  
+                $scope.customer.email = customer.email;  
+                $scope.customer.phone = customer.phone; 
                 
-                $scope.current = customer;               
                 $scope.addcustomercls.push('ng-hide');
                 $scope.editcustomercls.pop('ng-hide');
                 
             }
-            $scope.updatecustomer = function(){
-                $scope.current = {};
-                $scope.addcustomercls.pop('ng-hide');
-                $scope.editcustomercls.push('ng-hide');
-            }
+            
             });
             
              
@@ -48,26 +77,19 @@
     </head>
     <body ng-app="Myapp">
         <h2>Angularjs from add, edit and delete</h2>
-        <div ng-controller="Customer">
+        <div ng-controller="Customer" style="max-width:900px;">
          
         <!-- Add customer -->    
-        <form class="form"  ng-submit="addcustomer(customer)" ng-class="addcustomercls">
+        <form class="form" ng-submit="savecustomer(customer)">
             <!-- ng-submit to post data to addcustomer function -->
             <h3>Add Customer</h3>
-            <p>Name : <input type="text" ng-model="customer.name" required /></p>
-            <p>Email : <input type="email" ng-model="customer.email" required /></p>
-            <p>Phone : <input type="tel"   ng-model="customer.phone" required  /></p>
-            <p><input type="submit" class="btn btn-success" value="Add Customer" /></p>
-        </form>
-            
-        <!-- Edit customer -->    
-        <form class="form"  ng-submit="updatecustomer()" ng-class="editcustomercls">
-            <!-- ng-submit to post data to updatecustomer function -->
-            <h3>edit Customer</h3>
-            <p>Name : <input type="text" value="{{current.name}}" ng-model="current.name" required /></p>
-            <p>Email : <input type="email" value="{{current.email}}" ng-model="current.email" required /></p>
-            <p>Phone : <input type="tel" value="{{current.phone}} "ng-model="current.phone" required /></p>
-            <p><input type="submit" class="btn btn-success" value="Update Customer" /></p>
+            <p ng-class="editcustomercls">ID : {{customer.id}} <input type="hidden" ng-model="customer.id" /></p>
+            <table class="table-condensed">                 
+                <tr><td><p>Name :</p><input type="text" ng-model="customer.name" required /></td></tr>
+                <tr><td><p>Email :</p><input type="email" ng-model="customer.email" required /></td></tr>
+                <tr><td><p>Phone :</p><input type="tel"   ng-model="customer.phone" required  /></td></tr>
+                <tr><td><input type="submit" class="btn btn-success" value="Add Customer" ng-class="addcustomercls"/> <input type="submit" class="btn btn-success" value="Update" ng-class="editcustomercls" /></td></tr>                 
+            </table>
         </form>
             
         <br/><br/>
@@ -76,11 +98,12 @@
         <h4>Total : {{customers.length}}</h4>
         <table class="table table-bordered">
             <tr>
-            <th>Name</th><th>Email</th><th>phone</th><th>Action</th>
+            <th>ID</th><th>Name</th><th>Email</th><th>phone</th><th>Action</th>
             </tr>
             
             <!-- ng-repeat to list customer from customers object -->
             <tr ng-repeat="customer in customers"> 
+                <td ng-bind="customer.id"></td>
                 <td ng-bind="customer.name"></td>
                 <td ng-bind="customer.email"></td>
                 <td ng-bind="customer.phone"></td>
