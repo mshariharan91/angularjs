@@ -4,76 +4,7 @@
         <link rel="stylesheet" href="css/bootstrap.css" />
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/angular.js"></script>      
-        <script type="text/javascript">
-            var myapp = angular.module('Myapp',[]); 
-            myapp.controller('Customer',function($scope){
-                
-            $scope.customers = []; // ng object
-             $scope.customer = {
-                 id : '',
-                 name : '',
-                 email : '',
-                 phone : ''
-             } ;    
-            $scope.addcustomercls = []; // ng class
-            $scope.editcustomercls = ['ng-hide']; // ng class
-            
-            
-            // add customer data into object 'customers'
-            $scope.savecustomer = function(customer)
-            {
-                if(customer.id == '') {
-                customer.id = $scope.customers.length + 1;
-                $scope.customers.push(customer);
-                $scope.customer = {
-                     id : '',
-                     name : '',
-                     email : '',
-                     phone : ''
-                 };  
-                }
-                else{
-                   $.grep($scope.customers, function (e){ 
-                    if (e.id == customer.id){
-                        e.name = customer.name;
-                        e.email = customer.email;  
-                        e.phone = customer.phone;  
-                    }  
-                });  
-                $scope.customer = {
-                     id : '',
-                     name : '',
-                     email : '',
-                     phone : ''
-                 };  
-                $scope.addcustomercls.pop('ng-hide');
-                $scope.editcustomercls.push('ng-hide'); 
-                }
-            }
-            
-            // remove customer data from object 'customers'
-            $scope.removecustomer = function(customer){
-                var index = $scope.customers.indexOf(customer);
-                alert('Delete Customer : '+ customer.name);
-                $scope.customers.splice(index,1)
-            }
-            
-            // update  customer data 
-            $scope.editcustomer = function(customer){
-                $scope.customer.id = customer.id;
-                $scope.customer.name = customer.name;  
-                $scope.customer.email = customer.email;  
-                $scope.customer.phone = customer.phone; 
-                
-                $scope.addcustomercls.push('ng-hide');
-                $scope.editcustomercls.pop('ng-hide');
-                
-            }
-            
-            });
-            
-             
-        </script>
+        <script type="text/javascript" src="js/script.js"></script>
     </head>
     <body ng-app="Myapp">
         <h2>Angularjs from add, edit and delete</h2>
@@ -107,8 +38,7 @@
                 <td ng-bind="customer.name"></td>
                 <td ng-bind="customer.email"></td>
                 <td ng-bind="customer.phone"></td>
-                <td>                
-                    <a href="javascript:void(0)" ng-click="removecustomer(customer)" class="btn btn-danger">Delete</a>  /              
+                <td><a href="javascript:void(0)" ng-click="removecustomer(customer)" class="btn btn-danger">Delete</a>  /              
                     <a href="javascript:void(0)" ng-click="editcustomer(customer)" class="btn btn-info">Edit</a></td>
             </tr>
         </table>
