@@ -1,13 +1,11 @@
-<p># angularjs<br>
-  AngularJs Tutorial</p>
-<p>AngularJS CRUD application</p>
+<p># AngularJS CRUD application</p>
 <p>Include CSS and JS FILES<br>
 </p>
 <p>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap.css&quot; /&gt;<br>
   &lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.js&quot;&gt;&lt;/script&gt;<br>
   &lt;script type=&quot;text/javascript&quot; src=&quot;js/angular.js&quot;&gt;&lt;/script&gt; <br>
   &lt;script type=&quot;text/javascript&quot; src=&quot;js/script.js&quot;&gt;&lt;/script&gt;</p>
-<p>&nbsp;</p>
+<p>-----------------------------------------------------------------------------------------------------------</p>
 <p>index.html</p>
 <p>&nbsp;</p>
 <p>&lt;html&gt;<br>
@@ -59,7 +57,7 @@
 &lt;/html&gt;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
+<p>-----------------------------------------------------------------------------------------------------------</p>
 <p>script.js file</p>
 <p>var myapp = angular.module('Myapp',[]); <br>
 myapp.controller('Customer',function($scope){</p>
@@ -122,5 +120,5 @@ myapp.controller('Customer',function($scope){</p>
   $scope.editcustomercls.pop('ng-hide');<br>
   }</p>
 <p>});</p>
-<p>&nbsp;</p>
+<p>-----------------------------------------------------------------------------------------------------------</p>
 <p>&nbsp;</p>
